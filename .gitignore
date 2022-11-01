@@ -39,6 +39,7 @@ build/
 
 # dependencies
 /node_modules
+front/node_modules
 /.pnp
 .pnp.js
 
