@@ -57,4 +57,17 @@ class ProjectServiceTest {
         assertThat(project.get().getName(), is("TDD-Planer 만들기"));
     }
 
+    @Test
+    void saveProject() {
+        given(projectRepository.save(any())).willReturn(Project.builder()
+                        .name("TDD-Planer")
+                        .id(2L)
+                .build());
+
+        Long id = projectService.save(Project.builder().name("TDD-Planer").build());
+
+        assertThat(id, is(2L));
+
+    }
+
 }

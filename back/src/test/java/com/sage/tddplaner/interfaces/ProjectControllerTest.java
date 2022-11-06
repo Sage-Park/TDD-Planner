@@ -8,6 +8,7 @@ import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
@@ -81,6 +82,23 @@ class ProjectControllerTest {
                 ))
         ;
 
+    }
+
+    @Test
+    void postProject() throws Exception {
+
+        given(projectService.save(any())).willReturn(2L);
+
+        mockMvc.perform(
+                        post("/projects")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"name\":\"TDD-Planer\"}")
+                )
+                .andExpect(status().isCreated())
+                .andExpect(header().string("Location", is("/projects/2")))
+        ;
+
+        then(projectService).should().save(refEq(Project.builder().name("TDD-Planer").build()));
 
     }
 }
