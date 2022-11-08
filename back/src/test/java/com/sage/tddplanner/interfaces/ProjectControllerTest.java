@@ -1,16 +1,13 @@
-package com.sage.tddplaner.interfaces;
+package com.sage.tddplanner.interfaces;
 
-import com.sage.tddplaner.application.ProjectService;
-import com.sage.tddplaner.domain.Project;
-import lombok.SneakyThrows;
+import com.sage.tddplanner.application.ProjectService;
+import com.sage.tddplanner.domain.Project;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.Arrays;
 import java.util.List;
@@ -60,7 +57,7 @@ class ProjectControllerTest {
         given(projectService.getProject(1L)).willReturn(Optional.of(Project.builder()
                 .id(1L).name("blog").build()));
         given(projectService.getProject(2L)).willReturn(Optional.of(Project.builder()
-                .id(2L).name("TDD-Planer").build()));
+                .id(2L).name("TDD-planner").build()));
 
         mockMvc.perform(get("/projects/{id}", 1L))
                 .andExpect(status().isOk())
@@ -77,7 +74,7 @@ class ProjectControllerTest {
                 .andExpect(content().string(
                         containsString("{" +
                                 "\"id\":2," +
-                                "\"name\":\"TDD-Planer\"" +
+                                "\"name\":\"TDD-planner\"" +
                                 "}")
                 ))
         ;
@@ -92,13 +89,13 @@ class ProjectControllerTest {
         mockMvc.perform(
                         post("/projects")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content("{\"name\":\"TDD-Planer\"}")
+                                .content("{\"name\":\"TDD-planner\"}")
                 )
                 .andExpect(status().isCreated())
                 .andExpect(header().string("Location", is("/projects/2")))
         ;
 
-        then(projectService).should().save(refEq(Project.builder().name("TDD-Planer").build()));
+        then(projectService).should().save(refEq(Project.builder().name("TDD-planner").build()));
 
     }
 }

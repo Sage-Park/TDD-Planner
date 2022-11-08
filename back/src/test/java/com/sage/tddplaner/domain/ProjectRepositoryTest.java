@@ -1,7 +1,0 @@
-package com.sage.tddplaner.domain;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-class ProjectRepositoryTest {
-
-}

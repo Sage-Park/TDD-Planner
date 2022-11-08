@@ -1,9 +1,8 @@
-package com.sage.tddplaner.interfaces;
+package com.sage.tddplanner.interfaces;
 
-import com.sage.tddplaner.application.ProjectService;
-import com.sage.tddplaner.domain.Project;
+import com.sage.tddplanner.application.ProjectService;
+import com.sage.tddplanner.domain.Project;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

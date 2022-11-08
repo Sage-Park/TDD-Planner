@@ -1,7 +1,7 @@
-package com.sage.tddplaner.application;
+package com.sage.tddplanner.application;
 
-import com.sage.tddplaner.domain.Project;
-import com.sage.tddplaner.domain.ProjectRepository;
+import com.sage.tddplanner.domain.Project;
+import com.sage.tddplanner.domain.ProjectRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

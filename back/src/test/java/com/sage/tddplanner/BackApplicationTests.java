@@ -1,4 +1,4 @@
-package com.sage.tddplaner;
+package com.sage.tddplanner;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

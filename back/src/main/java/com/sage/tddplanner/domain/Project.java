@@ -1,4 +1,4 @@
-package com.sage.tddplaner.domain;
+package com.sage.tddplanner.domain;
 
 import lombok.*;
 
