@@ -57,9 +57,11 @@ class SectionControllerTest {
                 Section.builder()
                         .id(1L)
                         .name("API개발")
+                        .projectId(1L)
                         .build(),
                 Section.builder()
                         .id(2L)
+                        .projectId(1L)
                         .name("FRONT개발")
                         .build()
         ));
@@ -68,12 +70,12 @@ class SectionControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(
                         containsString("{" +
-                                "\"id\":1,\"name\":\"API개발\"" +
+                                "\"id\":1,\"name\":\"API개발\",\"projectId\":1" +
                                 "}")
                 ))
                 .andExpect(content().string(
                         containsString("{" +
-                                "\"id\":2,\"name\":\"FRONT개발\"" +
+                                "\"id\":2,\"name\":\"FRONT개발\",\"projectId\":1" +
                                 "}")
                 ));
 
