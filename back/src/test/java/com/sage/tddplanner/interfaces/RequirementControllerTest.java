@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -76,6 +77,24 @@ class RequirementControllerTest {
                 .andExpect(content().string(containsString("{\"id\":1,\"name\":\"프로젝트를 추가할 수 있다.\"}")))
                 .andExpect(content().string(containsString("{\"id\":2,\"name\":\"프로젝트의 요구사항을 조회할 수 있다.\"}")));
 
+
+    }
+
+    @Test
+    void createProjectRequirement() throws Exception {
+
+        given(requirementService.create(anyLong(), any())).willReturn(3L);
+
+        mockMvc.perform(
+                post("/projects/{projectId}/requirements", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\": \"프로젝트를 추가할 수 있다.\"}")
+        )
+                .andExpect(status().isCreated())
+                .andExpect(header().string("Location", is("/projects/1/requirements/3")))
+        ;
+
+        then(requirementService).should().create(1L, "프로젝트를 추가할 수 있다.");
 
     }
 
