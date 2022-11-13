@@ -1,7 +1,8 @@
 import {useEffect, useState} from "react";
-import {createProject, getProjects} from "./api/project";
+import {createProject, getProjects} from "../api/project";
 import {Button} from "@mui/material";
-import ProjectFormDialog from "./components/ProjectFormDialog";
+import ProjectFormDialog from "../components/ProjectFormDialog";
+import Header from "../components/Header";
 
 type Project = {
   id: number;
@@ -41,6 +42,7 @@ const Home = () => {
 
   return (
       <>
+        <Header />
         {projects.map((project) => (
             <div>{project.name}</div>
         ))}
