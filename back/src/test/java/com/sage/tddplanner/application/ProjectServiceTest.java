@@ -2,9 +2,12 @@ package com.sage.tddplanner.application;
 
 import com.sage.tddplanner.domain.Project;
 import com.sage.tddplanner.domain.ProjectRepository;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -14,6 +17,7 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -67,5 +71,56 @@ class ProjectServiceTest {
         assertThat(id, is(2L));
 
     }
+
+    @Nested
+    class updateProject {
+
+        @Test
+        void ifProjectExist() {
+
+            Project project = Project.builder()
+                    .id(1L)
+                    .name("TDD")
+                    .build();
+            given(projectRepository.findById(any())).willReturn(
+                    Optional.of(project)
+            );
+
+            projectService.update(1L, "TDD-Planner");
+
+            assertThat(project.getName(), is("TDD-Planner"));
+        }
+
+        @Test
+        void ifProjectNotExist() {
+            given(projectRepository.findById(any())).willReturn(
+                    Optional.empty()
+            );
+
+            Throwable thrown = assertThrows(RuntimeException.class, () -> projectService.update(1L, "TDD-Planner"));
+
+            assertThat(thrown, instanceOf(RuntimeException.class));
+
+
+        }
+
+        @Test
+        void ifNameIsNull() {
+            Project project = Project.builder()
+                    .id(1L)
+                    .name("TDD")
+                    .build();
+            given(projectRepository.findById(any())).willReturn(
+                    Optional.of(project)
+            );
+
+            projectService.update(1L, null);
+
+            assertThat(project.getName(), is("TDD"));
+        }
+
+    }
+
+
 
 }

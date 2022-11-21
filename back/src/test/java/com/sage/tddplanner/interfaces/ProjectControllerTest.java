@@ -98,4 +98,18 @@ class ProjectControllerTest {
         then(projectService).should().save(refEq(Project.builder().name("TDD-planner").build()));
 
     }
+
+    @Test
+    void patchProject() throws Exception {
+
+        mockMvc.perform(
+                patch("/projects/{projectId}", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\":\"TDD-Planner02\"}")
+        )
+                .andExpect(status().isOk());
+
+        then(projectService).should().update(1L, "TDD-Planner02");
+    }
+
 }

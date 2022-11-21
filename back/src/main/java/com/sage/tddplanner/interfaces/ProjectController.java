@@ -34,4 +34,14 @@ public class ProjectController {
         return ResponseEntity.created(new URI("/projects/" + id)).build();
 
     }
+
+    @PatchMapping("/projects/{projectId}")
+    public ResponseEntity<?> patch(
+            @PathVariable Long projectId, @RequestBody Project project) {
+
+        project.setId(projectId);
+        projectService.update(projectId, project.getName());
+
+        return ResponseEntity.ok().build();
+    }
 }
