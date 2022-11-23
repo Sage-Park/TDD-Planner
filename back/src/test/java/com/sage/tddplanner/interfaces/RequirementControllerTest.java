@@ -56,26 +56,29 @@ class RequirementControllerTest {
                 Requirement.builder()
                         .id(1L)
                         .name("프로젝트 리스트를 조회할 수 있다.")
+                        .projectId(1L)
                         .build()
         ));
         mockMvc.perform(get("/projects/{projectId}/requirements", 1L))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("{\"id\":1,\"name\":\"프로젝트 리스트를 조회할 수 있다.\"}")));
+                .andExpect(content().string(containsString("{\"id\":1,\"name\":\"프로젝트 리스트를 조회할 수 있다.\",\"projectId\":1}")));
 
         given(requirementService.getAllByProjectId(2L)).willReturn(Arrays.asList(
                 Requirement.builder()
                         .id(1L)
                         .name("프로젝트를 추가할 수 있다.")
+                        .projectId(2L)
                         .build(),
                 Requirement.builder()
                         .id(2L)
                         .name("프로젝트의 요구사항을 조회할 수 있다.")
+                        .projectId(2L)
                         .build()
         ));
         mockMvc.perform(get("/projects/{projectId}/requirements", 2L))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("{\"id\":1,\"name\":\"프로젝트를 추가할 수 있다.\"}")))
-                .andExpect(content().string(containsString("{\"id\":2,\"name\":\"프로젝트의 요구사항을 조회할 수 있다.\"}")));
+                .andExpect(content().string(containsString("{\"id\":1,\"name\":\"프로젝트를 추가할 수 있다.\",\"projectId\":2}")))
+                .andExpect(content().string(containsString("{\"id\":2,\"name\":\"프로젝트의 요구사항을 조회할 수 있다.\",\"projectId\":2}")));
 
 
     }
