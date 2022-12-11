@@ -1,13 +1,10 @@
 package com.sage.tddplanner.application;
 
-import com.sage.tddplanner.domain.Requirement;
-import com.sage.tddplanner.domain.RequirementRepository;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import com.sage.tddplanner.jpa.Requirement;
+import com.sage.tddplanner.jpa.RequirementRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -16,7 +13,6 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)

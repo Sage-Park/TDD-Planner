@@ -1,7 +1,7 @@
 package com.sage.tddplanner.interfaces;
 
 import com.sage.tddplanner.application.ProjectService;
-import com.sage.tddplanner.domain.Project;
+import com.sage.tddplanner.jpa.Project;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

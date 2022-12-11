@@ -1,7 +1,7 @@
 package com.sage.tddplanner.application;
 
-import com.sage.tddplanner.domain.Requirement;
-import com.sage.tddplanner.domain.RequirementRepository;
+import com.sage.tddplanner.jpa.Requirement;
+import com.sage.tddplanner.jpa.RequirementRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

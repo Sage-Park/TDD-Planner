@@ -1,13 +1,12 @@
 package com.sage.tddplanner.interfaces;
 
 import com.sage.tddplanner.application.RequirementService;
-import com.sage.tddplanner.domain.Requirement;
+import com.sage.tddplanner.jpa.Requirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController

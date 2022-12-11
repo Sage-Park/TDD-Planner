@@ -1,13 +1,11 @@
 package com.sage.tddplanner.application;
 
-import com.sage.tddplanner.domain.Project;
-import com.sage.tddplanner.domain.ProjectRepository;
-import org.hamcrest.MatcherAssert;
+import com.sage.tddplanner.jpa.Project;
+import com.sage.tddplanner.jpa.ProjectRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 

@@ -1,4 +1,4 @@
-package com.sage.tddplanner.domain;
+package com.sage.tddplanner.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

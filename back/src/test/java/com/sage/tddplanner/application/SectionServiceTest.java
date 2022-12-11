@@ -1,7 +1,7 @@
 package com.sage.tddplanner.application;
 
-import com.sage.tddplanner.domain.Section;
-import com.sage.tddplanner.domain.SectionRepository;
+import com.sage.tddplanner.jpa.Section;
+import com.sage.tddplanner.jpa.SectionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

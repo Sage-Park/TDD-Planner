@@ -1,10 +1,9 @@
 package com.sage.tddplanner.application;
 
-import com.sage.tddplanner.domain.Section;
-import com.sage.tddplanner.domain.SectionRepository;
+import com.sage.tddplanner.jpa.Section;
+import com.sage.tddplanner.jpa.SectionRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service

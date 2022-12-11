@@ -1,7 +1,7 @@
 package com.sage.tddplanner.interfaces;
 
 import com.sage.tddplanner.application.SectionService;
-import com.sage.tddplanner.domain.Section;
+import com.sage.tddplanner.jpa.Section;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
