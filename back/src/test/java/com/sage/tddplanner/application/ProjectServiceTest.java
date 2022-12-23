@@ -1,7 +1,7 @@
 package com.sage.tddplanner.application;
 
-import com.sage.tddplanner.jpa.Project;
-import com.sage.tddplanner.jpa.ProjectRepository;
+import com.sage.tddplanner.jpa.ProjectJpaEntity;
+import com.sage.tddplanner.jpa.ProjectJpaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ class ProjectServiceTest {
 
     private ProjectService projectService;
     @Mock
-    private ProjectRepository projectRepository;
+    private ProjectJpaRepository projectRepository;
 
     @BeforeEach
     void setUp() {
@@ -34,37 +34,37 @@ class ProjectServiceTest {
     void getProjects() {
 
         //given
-        List<Project> projects = Arrays.asList(
-                Project.builder().name("TDD-planner 만들기").build()
+        List<ProjectJpaEntity> projects = Arrays.asList(
+                ProjectJpaEntity.builder().name("TDD-planner 만들기").build()
         );
         given(projectRepository.findAll()).willReturn(projects);
 
         //when
-        List<Project> result = projectService.getProjects();
+        List<ProjectJpaEntity> result = projectService.getProjects();
 
         //then
-        Project project = result.get(0);
+        ProjectJpaEntity project = result.get(0);
         assertThat(project.getName(), is("TDD-planner 만들기"));
     }
 
     @Test
     void getProjectById() {
         //given
-        given(projectRepository.findById(1L)).willReturn(Optional.of(Project.builder().name("TDD-planner 만들기").build()));
+        given(projectRepository.findById(1L)).willReturn(Optional.of(ProjectJpaEntity.builder().name("TDD-planner 만들기").build()));
         //when
-        Optional<Project> project = projectService.getProject(1L);
+        Optional<ProjectJpaEntity> project = projectService.getProject(1L);
         //then
         assertThat(project.get().getName(), is("TDD-planner 만들기"));
     }
 
     @Test
     void saveProject() {
-        given(projectRepository.save(any())).willReturn(Project.builder()
+        given(projectRepository.save(any())).willReturn(ProjectJpaEntity.builder()
                         .name("TDD-planner")
                         .id(2L)
                 .build());
 
-        Long id = projectService.save(Project.builder().name("TDD-planner").build());
+        Long id = projectService.save(ProjectJpaEntity.builder().name("TDD-planner").build());
 
         assertThat(id, is(2L));
 
@@ -76,7 +76,7 @@ class ProjectServiceTest {
         @Test
         void ifProjectExist() {
 
-            Project project = Project.builder()
+            ProjectJpaEntity project = ProjectJpaEntity.builder()
                     .id(1L)
                     .name("TDD")
                     .build();
@@ -104,7 +104,7 @@ class ProjectServiceTest {
 
         @Test
         void ifNameIsNull() {
-            Project project = Project.builder()
+            ProjectJpaEntity project = ProjectJpaEntity.builder()
                     .id(1L)
                     .name("TDD")
                     .build();

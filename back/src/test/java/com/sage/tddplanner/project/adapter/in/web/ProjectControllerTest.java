@@ -1,9 +1,12 @@
-package com.sage.tddplanner.interfaces;
+package com.sage.tddplanner.project.adapter.in.web;
 
 import com.sage.tddplanner.application.ProjectService;
-import com.sage.tddplanner.jpa.Project;
+import com.sage.tddplanner.jpa.ProjectJpaEntity;
+import com.sage.tddplanner.project.application.port.in.CreateProjectUsecase;
+import com.sage.tddplanner.project.domain.ProjectId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -29,11 +32,15 @@ class ProjectControllerTest {
     @MockBean
     private ProjectService projectService;
 
+    @MockBean
+    @Qualifier("createProjectService")
+    private CreateProjectUsecase createProjectUsecase;
+
     @Test
     void getProjects() throws Exception {
 
-        List<Project> projects = Arrays.asList(
-                Project.builder().id(1L).name("blog").build()
+        List<ProjectJpaEntity> projects = Arrays.asList(
+                ProjectJpaEntity.builder().id(1L).name("blog").build()
         );
 
         given(projectService.getProjects()).willReturn(projects);
@@ -54,9 +61,9 @@ class ProjectControllerTest {
     @Test
     void getProject() throws Exception {
 
-        given(projectService.getProject(1L)).willReturn(Optional.of(Project.builder()
+        given(projectService.getProject(1L)).willReturn(Optional.of(ProjectJpaEntity.builder()
                 .id(1L).name("blog").build()));
-        given(projectService.getProject(2L)).willReturn(Optional.of(Project.builder()
+        given(projectService.getProject(2L)).willReturn(Optional.of(ProjectJpaEntity.builder()
                 .id(2L).name("TDD-planner").build()));
 
         mockMvc.perform(get("/projects/{id}", 1L))
@@ -84,7 +91,7 @@ class ProjectControllerTest {
     @Test
     void postProject() throws Exception {
 
-        given(projectService.save(any())).willReturn(2L);
+        given(createProjectUsecase.create(any())).willReturn(ProjectId.create(2L));
 
         mockMvc.perform(
                         post("/projects")
@@ -95,7 +102,7 @@ class ProjectControllerTest {
                 .andExpect(header().string("Location", is("/projects/2")))
         ;
 
-        then(projectService).should().save(refEq(Project.builder().name("TDD-planner").build()));
+        then(createProjectUsecase).should().create("TDD-planner");
 
     }
 

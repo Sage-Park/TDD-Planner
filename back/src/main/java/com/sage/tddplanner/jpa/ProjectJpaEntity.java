@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Builder
@@ -13,7 +14,15 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @ToString
-public class Project {
+@Table(name = "PROJECT")
+public class ProjectJpaEntity {
+
+    public static ProjectJpaEntity createWithNoId(String name) {
+        return new ProjectJpaEntity(null, name);
+    }
+
+
+
     @Id
     @GeneratedValue
     private Long id;
