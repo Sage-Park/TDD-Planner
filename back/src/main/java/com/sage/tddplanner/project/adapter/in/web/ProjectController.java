@@ -36,11 +36,15 @@ public class ProjectController {
     }
 
     @GetMapping("/projects/{id}")
-    public ProjectDto getProject(@PathVariable Long id) {
-
-        Project project = getProjectsQuery.getProject(ProjectId.create(id));
-
-        return new ProjectDto(project.getProjectId().getId(), project.getName());
+    public ResponseEntity<ProjectDto> getProject(@PathVariable Long id) {
+        try {
+            Project project = getProjectsQuery.getProject(ProjectId.create(id));
+            ProjectDto projectDto = new ProjectDto(project.getProjectId().getId(), project.getName());
+            return ResponseEntity.ok(projectDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PostMapping("/projects")

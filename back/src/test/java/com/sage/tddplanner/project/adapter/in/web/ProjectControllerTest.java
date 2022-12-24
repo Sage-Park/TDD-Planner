@@ -6,6 +6,7 @@ import com.sage.tddplanner.project.application.port.in.CreateProjectUsecase;
 import com.sage.tddplanner.project.application.port.in.GetProjectsQuery;
 import com.sage.tddplanner.project.domain.Project;
 import com.sage.tddplanner.project.domain.ProjectId;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -91,8 +92,19 @@ class ProjectControllerTest {
                                 "}")
                 ))
         ;
+    }
+
+    @Test
+    void getProjectIfException() throws Exception {
+
+        willThrow(new RuntimeException())
+                .given(getProjectsQuery).getProject(any());
+
+        mockMvc.perform(get("/projects/1"))
+                .andExpect(status().is5xxServerError());
 
     }
+
 
     @Test
     void postProject() throws Exception {
