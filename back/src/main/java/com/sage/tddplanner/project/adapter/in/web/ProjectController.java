@@ -3,6 +3,8 @@ package com.sage.tddplanner.project.adapter.in.web;
 import com.sage.tddplanner.application.ProjectService;
 import com.sage.tddplanner.jpa.ProjectJpaEntity;
 import com.sage.tddplanner.project.application.port.in.CreateProjectUsecase;
+import com.sage.tddplanner.project.application.port.in.GetProjectsQuery;
+import com.sage.tddplanner.project.domain.Project;
 import com.sage.tddplanner.project.domain.ProjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,8 +22,11 @@ public class ProjectController {
     private ProjectService projectService;
 
     private final CreateProjectUsecase createProjectUsecase;
-    public ProjectController(@Qualifier("createProjectService") CreateProjectUsecase createProjectUsecase) {
+    private final GetProjectsQuery getProjectsQuery;
+    public ProjectController(@Qualifier("createProjectService") CreateProjectUsecase createProjectUsecase,
+                             GetProjectsQuery getProjectsQuery) {
         this.createProjectUsecase = createProjectUsecase;
+        this.getProjectsQuery = getProjectsQuery;
     }
 
     @GetMapping("/projects")
@@ -31,8 +36,11 @@ public class ProjectController {
     }
 
     @GetMapping("/projects/{id}")
-    public ProjectJpaEntity getProject(@PathVariable Long id) {
-        return projectService.getProject(id).orElse(null);
+    public ProjectDto getProject(@PathVariable Long id) {
+
+        Project project = getProjectsQuery.getProject(ProjectId.create(id));
+
+        return new ProjectDto(project.getProjectId().getId(), project.getName());
     }
 
     @PostMapping("/projects")

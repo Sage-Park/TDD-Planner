@@ -3,6 +3,8 @@ package com.sage.tddplanner.project.adapter.in.web;
 import com.sage.tddplanner.application.ProjectService;
 import com.sage.tddplanner.jpa.ProjectJpaEntity;
 import com.sage.tddplanner.project.application.port.in.CreateProjectUsecase;
+import com.sage.tddplanner.project.application.port.in.GetProjectsQuery;
+import com.sage.tddplanner.project.domain.Project;
 import com.sage.tddplanner.project.domain.ProjectId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,9 @@ class ProjectControllerTest {
     @Qualifier("createProjectService")
     private CreateProjectUsecase createProjectUsecase;
 
+    @MockBean
+    private GetProjectsQuery getProjectsQuery;
+
     @Test
     void getProjects() throws Exception {
 
@@ -61,10 +66,11 @@ class ProjectControllerTest {
     @Test
     void getProject() throws Exception {
 
-        given(projectService.getProject(1L)).willReturn(Optional.of(ProjectJpaEntity.builder()
-                .id(1L).name("blog").build()));
-        given(projectService.getProject(2L)).willReturn(Optional.of(ProjectJpaEntity.builder()
-                .id(2L).name("TDD-planner").build()));
+        given(getProjectsQuery.getProject(ProjectId.create(1L)))
+                .willReturn(new Project(ProjectId.create(1L), "blog"));
+        given(getProjectsQuery.getProject(ProjectId.create(2L)))
+                .willReturn(new Project(ProjectId.create(2L), "TDD-planner"));
+
 
         mockMvc.perform(get("/projects/{id}", 1L))
                 .andExpect(status().isOk())
