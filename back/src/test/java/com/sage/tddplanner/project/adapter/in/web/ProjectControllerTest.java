@@ -1,12 +1,9 @@
 package com.sage.tddplanner.project.adapter.in.web;
 
-import com.sage.tddplanner.application.ProjectService;
-import com.sage.tddplanner.jpa.ProjectJpaEntity;
 import com.sage.tddplanner.project.application.port.in.CreateProjectUsecase;
 import com.sage.tddplanner.project.application.port.in.GetProjectsQuery;
 import com.sage.tddplanner.project.domain.Project;
 import com.sage.tddplanner.project.domain.ProjectId;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,12 +14,13 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ProjectController.class)
@@ -31,9 +29,6 @@ class ProjectControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @MockBean
-    private ProjectService projectService;
 
     @MockBean
     @Qualifier("createProjectService")
@@ -45,11 +40,10 @@ class ProjectControllerTest {
     @Test
     void getProjects() throws Exception {
 
-        List<ProjectJpaEntity> projects = Arrays.asList(
-                ProjectJpaEntity.builder().id(1L).name("blog").build()
+        List<Project> projects = Arrays.asList(
+                new Project(ProjectId.create(1L), "blog")
         );
-
-        given(projectService.getProjects()).willReturn(projects);
+        given(getProjectsQuery.getAllProjects()).willReturn(projects);
 
         mockMvc.perform(get("/projects"))
                 .andExpect(status().isOk())
@@ -122,19 +116,6 @@ class ProjectControllerTest {
 
         then(createProjectUsecase).should().create("TDD-planner");
 
-    }
-
-    @Test
-    void patchProject() throws Exception {
-
-        mockMvc.perform(
-                patch("/projects/{projectId}", 1L)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"name\":\"TDD-Planner02\"}")
-        )
-                .andExpect(status().isOk());
-
-        then(projectService).should().update(1L, "TDD-Planner02");
     }
 
 }
